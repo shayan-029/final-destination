@@ -1,0 +1,41 @@
+services:
+  gateway:
+    container_name: gateway
+    build:
+      context: ./
+      dockerfile: Dockerfile.gateway
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '8080:8000'
+    networks:
+      - app-network
+    depends_on:
+      - rabbitmq
+
+  auth:
+    container_name: auth
+    build:
+      context: ./
+      dockerfile: Dockerfile.auth
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - app-network
+    depends_on:
+      - rabbitmq
+
+  rabbitmq: # ✅ now inside services
+    image: rabbitmq:3.12-management-alpine
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
