@@ -1,22 +1,22 @@
 {
-  "name": "auth",
+  "name": "student",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/auth/src",
+  "sourceRoot": "apps/student/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nx/webpack:webpack",
-      "outputs": ["{workspaceRoot}/dist/apps/auth"],
+      "outputs": ["{workspaceRoot}/dist/apps/student"],
       "defaultConfiguration": "production",
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/auth",
+        "outputPath": "dist/apps/student",
         "outputFileName": "main.js",
-        "main": "apps/auth/src/main.ts",
-        "tsConfig": "apps/auth/tsconfig.app.json",
-        "assets": ["apps/auth/src/assets"],
-        "webpackConfig": "apps/auth/webpack.config.js"
+        "main": "apps/student/src/main.ts",
+        "tsConfig": "apps/student/tsconfig.app.json",
+        "assets": ["apps/student/src/assets"],
+        "webpackConfig": "apps/student/webpack.config.js"
       },
       "configurations": {
         "development": {
@@ -40,8 +40,8 @@
       "cache": true,
       "executor": "@nx/js:prune-lockfile",
       "outputs": [
-        "{workspaceRoot}/dist/apps/auth/package.json",
-        "{workspaceRoot}/dist/apps/auth/pnpm-lock.yaml"
+        "{workspaceRoot}/dist/apps/student/package.json",
+        "{workspaceRoot}/dist/apps/student/pnpm-lock.yaml"
       ],
       "options": {
         "buildTarget": "build"
@@ -50,7 +50,7 @@
     "copy-workspace-modules": {
       "dependsOn": ["build"],
       "cache": true,
-      "outputs": ["{workspaceRoot}/dist/apps/auth/workspace_modules"],
+      "outputs": ["{workspaceRoot}/dist/apps/student/workspace_modules"],
       "executor": "@nx/js:copy-workspace-modules",
       "options": {
         "buildTarget": "build"
@@ -66,15 +66,15 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "auth:build",
+        "buildTarget": "student:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "auth:build:development"
+          "buildTarget": "student:build:development"
         },
         "production": {
-          "buildTarget": "auth:build:production"
+          "buildTarget": "student:build:production"
         }
       }
     }

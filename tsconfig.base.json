@@ -23,7 +23,8 @@
       ],
       "@shared/constants":[
         "libs/shared/src/constants/index.ts"
-      ]
+      ],
+      "@shared/rmq.module": ["libs/shared/src/lib/rmq.module.ts"],
     }
   },
   "exclude": [

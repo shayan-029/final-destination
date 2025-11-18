@@ -1,15 +1,5 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "parallel": 15,
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
-      }
-    }
-  },
- 
   "defaultBase": "master",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -20,7 +10,6 @@
     ],
     "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
-  "nxCloudId": "6911bcc44ebb3e53d17e402a",
   "plugins": [
     {
       "plugin": "@nx/js/typescript",
