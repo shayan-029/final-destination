@@ -1,4 +1,4 @@
-import { SignupDto, SignInDto } from '@shared';
+import { SignupDto, SignInDto, ForgotPasswordDto, ResetPasswordDto } from '@shared';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { SERVICES } from '@shared/constants';
@@ -82,6 +82,58 @@ export class GatewayService {
         statusCode: 401,
         status: 'error',
         message: 'Unauthorized',
+      };
+    }
+  }
+
+  async forgetPassword(body: ForgotPasswordDto) {
+    try {
+      const result = await firstValueFrom(
+        this.authClient.send('forget-password', body)
+      );
+      console.log('GATEWAY FORGET PASSWORD RESULT >>>', result);
+      return result;
+    } catch (error) {
+      console.error('GATEWAY FORGET PASSWORD ERROR >>>', error);
+      if (error?.message?.message) {
+        return {
+          statusCode: error.message.statusCode || 500,
+          status: error.message.status || 'error',
+          message: error.message.message,
+          errors: error.message.errors || undefined,
+        };
+      }
+      const errorMessage = error?.response?.message || error?.message || 'Internal server error';
+      return {
+        statusCode: 500,
+        status: 'error',
+        message: Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage,
+      };
+    }
+  }
+
+  async resetPassword(body: ResetPasswordDto) {
+    try {
+      const result = await firstValueFrom(
+        this.authClient.send('reset-password', body)
+      );
+      console.log('GATEWAY RESET PASSWORD RESULT >>>', result);
+      return result;
+    } catch (error) {
+      console.error('GATEWAY RESET PASSWORD ERROR >>>', error);
+      if (error?.message?.message) {
+        return {
+          statusCode: error.message.statusCode || 500,
+          status: error.message.status || 'error',
+          message: error.message.message,
+          errors: error.message.errors || undefined,
+        };
+      }
+      const errorMessage = error?.response?.message || error?.message || 'Internal server error';
+      return {
+        statusCode: 500,
+        status: 'error',
+        message: Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage,
       };
     }
   }
