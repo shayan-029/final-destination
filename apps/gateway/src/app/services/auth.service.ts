@@ -1,4 +1,9 @@
-import { SignupDto, SignInDto, ForgotPasswordDto, ResetPasswordDto } from '@shared';
+import {
+  SignupDto,
+  SignInDto,
+  ForgotPasswordDto,
+  ResetPasswordDto,
+} from '@shared';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { SERVICES } from '@shared/constants';
@@ -9,9 +14,7 @@ export class GatewayService {
 
   async signup(body: SignupDto) {
     try {
-      const result = await firstValueFrom(
-        this.authClient.send('signup', body)
-      );
+      const result = await firstValueFrom(this.authClient.send('signup', body));
       console.log('GATEWAY RESULT >>>', result);
       return result;
     } catch (error) {
@@ -26,20 +29,21 @@ export class GatewayService {
           errors: error.message.errors || undefined,
         };
       }
-      const errorMessage = error?.response?.message || error?.message || 'Internal server error';
+      const errorMessage =
+        error?.response?.message || error?.message || 'Internal server error';
       return {
         statusCode: 500,
         status: 'error',
-        message: Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage,
+        message: Array.isArray(errorMessage)
+          ? errorMessage.join(', ')
+          : errorMessage,
       };
     }
   }
 
   async signin(body: SignInDto) {
     try {
-      const result = await firstValueFrom(
-        this.authClient.send('signin', body)
-      );
+      const result = await firstValueFrom(this.authClient.send('signin', body));
       console.log('GATEWAY SIGNIN RESULT >>>', result);
       return result;
     } catch (error) {
@@ -54,11 +58,14 @@ export class GatewayService {
           errors: error.message.errors || undefined,
         };
       }
-      const errorMessage = error?.response?.message || error?.message || 'Internal server error';
+      const errorMessage =
+        error?.response?.message || error?.message || 'Internal server error';
       return {
         statusCode: 500,
         status: 'error',
-        message: Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage,
+        message: Array.isArray(errorMessage)
+          ? errorMessage.join(', ')
+          : errorMessage,
       };
     }
   }
@@ -103,11 +110,14 @@ export class GatewayService {
           errors: error.message.errors || undefined,
         };
       }
-      const errorMessage = error?.response?.message || error?.message || 'Internal server error';
+      const errorMessage =
+        error?.response?.message || error?.message || 'Internal server error';
       return {
         statusCode: 500,
         status: 'error',
-        message: Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage,
+        message: Array.isArray(errorMessage)
+          ? errorMessage.join(', ')
+          : errorMessage,
       };
     }
   }
@@ -129,11 +139,14 @@ export class GatewayService {
           errors: error.message.errors || undefined,
         };
       }
-      const errorMessage = error?.response?.message || error?.message || 'Internal server error';
+      const errorMessage =
+        error?.response?.message || error?.message || 'Internal server error';
       return {
         statusCode: 500,
         status: 'error',
-        message: Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage,
+        message: Array.isArray(errorMessage)
+          ? errorMessage.join(', ')
+          : errorMessage,
       };
     }
   }

@@ -8,7 +8,7 @@ export class ProfileController {
   @Get()
   @ApiOperation({ summary: 'Get current user profile' })
   @ApiResponse({ status: 200, description: 'User profile retrieved successfully' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 401, description: 'Unauthorized user to access this resource' })
   async getProfile(@Request() req) {
     // req.user is populated by JwtAuthGuard from the JWT token
     return {
@@ -17,4 +17,5 @@ export class ProfileController {
     };
   }
 }
+
 

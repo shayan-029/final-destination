@@ -1,7 +1,14 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { GatewayService } from '../gateway.service';
-import { SignupDto, SignInDto, ForgotPasswordDto, ResetPasswordDto, Public } from '@shared';
+import {
+  SignupDto,
+  SignInDto,
+  ForgotPasswordDto,
+  ResetPasswordDto,
+  Public,
+  CreateStudentDto,
+} from '@shared';
+import { GatewayService } from '../services/auth.service';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -29,7 +36,10 @@ export class AuthController {
   @Public()
   @Post('forget-password')
   @ApiOperation({ summary: 'Request password reset' })
-  @ApiResponse({ status: 200, description: 'Password reset email sent (if email exists)' })
+  @ApiResponse({
+    status: 200,
+    description: 'Password reset email sent (if email exists)',
+  })
   @ApiResponse({ status: 400, description: 'Bad request' })
   async forgetPassword(@Body() body: ForgotPasswordDto) {
     return this.appService.forgetPassword(body);
@@ -39,7 +49,10 @@ export class AuthController {
   @Post('reset-password')
   @ApiOperation({ summary: 'Reset password with token' })
   @ApiResponse({ status: 200, description: 'Password successfully reset' })
-  @ApiResponse({ status: 400, description: 'Invalid token or passwords do not match' })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid token or passwords do not match',
+  })
   async resetPassword(@Body() body: ResetPasswordDto) {
     return this.appService.resetPassword(body);
   }
