@@ -1,22 +1,22 @@
 {
-  "name": "class",
+  "name": "student",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/class/src",
+  "sourceRoot": "apps/student/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nx/webpack:webpack",
-      "outputs": ["{workspaceRoot}/dist/apps/class"],
+      "outputs": ["{workspaceRoot}/dist/apps/student"],
       "defaultConfiguration": "production",
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/class",
+        "outputPath": "dist/apps/student",
         "outputFileName": "main.js",
-        "main": "apps/class/src/main.ts",
-        "tsConfig": "apps/class/tsconfig.app.json",
-        "assets": ["apps/class/src/assets"],
-        "webpackConfig": "apps/class/webpack.config.js"
+        "main": "apps/student/src/main.ts",
+        "tsConfig": "apps/student/tsconfig.app.json",
+        "assets": ["apps/student/src/assets"],
+        "webpackConfig": "apps/student/webpack.config.js"
       },
       "configurations": {
         "development": {
