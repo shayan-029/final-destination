@@ -1,41 +1,34 @@
-import {
-  Controller,
-  Post,
-  Get,
-  Put,
-  Delete,
-  Body,
-  Param,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto, UpdateStudentDto } from 'libs/shared/src/dtos/student-dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
-@Controller('student')
+@Controller()
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
-  @Post()
-  create(@Body() dto: CreateStudentDto) {
+  @MessagePattern('student.create')
+  create(@Payload() dto: CreateStudentDto) {
     return this.studentService.create(dto);
   }
 
-  @Get()
+  @MessagePattern('student.findAll')
   findAll() {
     return this.studentService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @MessagePattern('student.findOne')
+  findOne(@Payload() id: string) {
     return this.studentService.findOne(id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateStudentDto) {
-    return this.studentService.update(id, dto);
+  @MessagePattern('student.update')
+  update(@Payload() data: { id: string; dto: UpdateStudentDto }) {
+    return this.studentService.update(data.id, data.dto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @MessagePattern('student.remove')
+  remove(@Payload() id: string) {
     return this.studentService.remove(id);
   }
 }

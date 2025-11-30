@@ -40,8 +40,8 @@
       "cache": true,
       "executor": "@nx/js:prune-lockfile",
       "outputs": [
-        "{workspaceRoot}/dist/apps/class/package.json",
-        "{workspaceRoot}/dist/apps/class/package-lock.json"
+        "{workspaceRoot}/dist/apps/student/package.json",
+        "{workspaceRoot}/dist/apps/student/pnpm-lock.yaml"
       ],
       "options": {
         "buildTarget": "build"
@@ -50,7 +50,7 @@
     "copy-workspace-modules": {
       "dependsOn": ["build"],
       "cache": true,
-      "outputs": ["{workspaceRoot}/dist/apps/class/workspace_modules"],
+      "outputs": ["{workspaceRoot}/dist/apps/student/workspace_modules"],
       "executor": "@nx/js:copy-workspace-modules",
       "options": {
         "buildTarget": "build"
@@ -66,15 +66,15 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "class:build",
+        "buildTarget": "student:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "class:build:development"
+          "buildTarget": "student:build:development"
         },
         "production": {
-          "buildTarget": "class:build:production"
+          "buildTarget": "student:build:production"
         }
       }
     }

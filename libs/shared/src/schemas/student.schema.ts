@@ -6,15 +6,13 @@ import { ClassSection } from './class.schema';
 export class Student extends Document {
   @Prop({ required: true })
   name: string;
-
-  @Prop({ required: true, unique: true })
-  email: string;
+  
+  @Prop({ type: Types.ObjectId, ref: ClassSection.name, required: false })
+  classId?: Types.ObjectId;
 
   @Prop({ required: true })
-  password: string;
-
-  @Prop({ type: Types.ObjectId, ref: ClassSection.name })
-  classId?: Types.ObjectId;
+  course: string;
 }
+
 
 export const StudentSchema = SchemaFactory.createForClass(Student);
