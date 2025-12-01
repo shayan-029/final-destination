@@ -1,4 +1,6 @@
 export enum SERVICES {
   AUTH = 'AUTH',
   STUDENT = 'STUDENT',
+  CLASS = 'CLASS',
+  TEACHER = 'TEACHER',
 }

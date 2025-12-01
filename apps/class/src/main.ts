@@ -1,45 +1,25 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
+import { SERVICES } from './../../../libs/shared/src/constants/services';
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ClassModule } from './class.module';
+import { AppModule } from './class.module';
 import { Transport } from '@nestjs/microservices';
-import { SERVICES } from '@shared/constants';
 
 async function bootstrap() {
-  const rmqUri = process.env.RMQ_URI || 'amqp://localhost:5672';
-  const queue = SERVICES.STUDENT;
-
-  try {
-    const app = await NestFactory.createMicroservice(ClassModule, {
-      transport: Transport.RMQ,
-      options: {
-        urls: [rmqUri],
-        queue: queue,
-        queueOptions: {
-          durable: true,
-        },
+  const app = await NestFactory.createMicroservice(AppModule, {
+    transport: Transport.RMQ,
+    options: {
+      urls: [process.env.RMQ_URI || 'amqp://localhost:5672'],
+      queue: SERVICES.CLASS,
+      queueOptions: {
+        durable: true,
       },
-    });
+    },
+  });
 
-    await app.listen();
-    Logger.log(
-      `🚀 Student Microservice is running and listening to queue: ${queue}`
-    );
-  } catch (error) {
-    Logger.error(
-      `Failed to start Student Microservice: ${error.message}`,
-      'Bootstrap'
-    );
-    Logger.error(
-      `Make sure RabbitMQ is running at ${rmqUri}`,
-      'Bootstrap'
-    );
-    process.exit(1);
-  }
+  await app.listen();
+  Logger.log(
+    `🚀 Auth Microservice is running and listening to queue: ${process.env.RMQ_AUTH_QUEUE}`
+  );
 }
 
 bootstrap();

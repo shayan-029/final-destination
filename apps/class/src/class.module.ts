@@ -1,21 +1,23 @@
-import { SharedModule } from '../../../libs/shared/src/lib/shared.module';
 import { Module } from '@nestjs/common';
-import { ClassController } from './app/class.controller';
-import { ClassSectionService } from './app/class.service';
-import { RmqModule } from '@shared/rmq.module';
-import { SERVICES } from '@shared/constants';
+import { SharedModule } from '../../../libs/shared/src/lib/shared.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ClassSection, ClassSectionSchema } from '../../../libs/shared/src/schemas/class.schema';
+import { Class, ClassSchema, RmqModule, SERVICES } from '@shared';
+import { ClassController } from './app/class.controller';
+import { ClassService } from './app/class.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    MongooseModule.forFeature([{ name: Class.name, schema: ClassSchema }]),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET || 'JWT_SECRET',
+      signOptions: { expiresIn: '1h' },
+    }),
+
     SharedModule,
-    RmqModule.registerMultipleAsync([SERVICES.AUTH]),
-    MongooseModule.forFeature([
-      { name: ClassSection.name, schema: ClassSectionSchema },
-    ]),
+    RmqModule.registerMultipleAsync([SERVICES.CLASS]),
   ],
   controllers: [ClassController],
-  providers: [ClassSectionService],
+  providers: [ClassService],
 })
-export class ClassModule {}
+export class AppModule {}

@@ -17,17 +17,8 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {
-      "@shared/lib": [
-        "libs/shared/src/lib/index.ts"
-      ],
-      "@shared/constants":[
-        "libs/shared/src/constants/index.ts"
-      ],
-      "@shared/rmq.module": ["libs/shared/src/lib/rmq.module.ts"],
-      "@shared/mongodb.module": ["libs/shared/src/lib/mongodb.module.ts"],
-      "@shared/shared.module": ["libs/shared/src/lib/shared.module.ts"],
-      "@shared": ["libs/shared/src/index.ts"],
+   "paths": {
+      "@shared": ["libs/shared/src"],
     }
   },
   "exclude": [

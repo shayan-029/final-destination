@@ -1,4 +1,3 @@
-export * from "./signup.schema";
+export * from "./user.schema";
 export * from "./reset-password.schema";
-export * from "./student.schema";
 export * from "./class.schema";

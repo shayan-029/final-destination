@@ -1,67 +1,50 @@
 import {
-  Controller,
-  Post,
-  Get,
-  Put,
-  Delete,
   Body,
+  Controller,
+  Delete,
+  Get,
   Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
-import { CreateClassSectionDto, UpdateClassSectionDto, Public } from '@shared';
-import { GatewayClassService } from '../services/class.service';
+import { ClassService } from '../services/class.service';
+import { CreateClassDto, UpdateClassDto, Roles } from '@shared';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Class')
 @Controller('class')
+@ApiTags('Classes')
+@ApiBearerAuth()
+// @ApiResponse({ status: 401, description: `You don't have access to this route `})
 export class ClassController {
-  constructor(private readonly classService: GatewayClassService) {}
+  constructor(private readonly classService: ClassService) {}
 
-  @Public()
+  @Roles('admin')
   @Post()
-  @ApiOperation({ summary: 'Create a new class section' })
-  @ApiBody({ type: CreateClassSectionDto })
-  @ApiResponse({ status: 201, description: 'Class section successfully created' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  async create(@Body() dto: CreateClassSectionDto) {
+  async create(@Body() dto: CreateClassDto) {
     return this.classService.create(dto);
   }
 
-  @Public()
+  @Roles()
   @Get()
-  @ApiOperation({ summary: 'Get all class sections' })
-  @ApiResponse({ status: 200, description: 'List of all class sections' })
   async findAll() {
     return this.classService.findAll();
   }
 
-  @Public()
+  @Roles()
   @Get(':id')
-  @ApiOperation({ summary: 'Get a class section by ID' })
-  @ApiParam({ name: 'id', description: 'Class section ID' })
-  @ApiResponse({ status: 200, description: 'Class section found' })
-  @ApiResponse({ status: 404, description: 'Class section not found' })
   async findOne(@Param('id') id: string) {
     return this.classService.findOne(id);
   }
 
-  @Put(':id')
-  @ApiOperation({ summary: 'Update a class section' })
-  @ApiParam({ name: 'id', description: 'Class section ID' })
-  @ApiBody({ type: UpdateClassSectionDto })
-  @ApiResponse({ status: 200, description: 'Class section successfully updated' })
-  @ApiResponse({ status: 404, description: 'Class section not found' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  async update(@Param('id') id: string, @Body() dto: UpdateClassSectionDto) {
+  @Roles('admin')
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() dto: UpdateClassDto) {
     return this.classService.update(id, dto);
   }
 
+  @Roles('admin')
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete a class section' })
-  @ApiParam({ name: 'id', description: 'Class section ID' })
-  @ApiResponse({ status: 200, description: 'Class section successfully deleted' })
-  @ApiResponse({ status: 404, description: 'Class section not found' })
-  async remove(@Param('id') id: string) {
+  async delete(@Param('id') id: string) {
     return this.classService.remove(id);
   }
 }
-

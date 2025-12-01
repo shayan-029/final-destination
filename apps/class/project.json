@@ -1,22 +1,22 @@
 {
-  "name": "student",
+  "name": "class",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/student/src",
+  "sourceRoot": "apps/class/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nx/webpack:webpack",
-      "outputs": ["{workspaceRoot}/dist/apps/student"],
+      "outputs": ["{workspaceRoot}/dist/apps/class"],
       "defaultConfiguration": "production",
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/student",
+        "outputPath": "dist/apps/class",
         "outputFileName": "main.js",
-        "main": "apps/student/src/main.ts",
-        "tsConfig": "apps/student/tsconfig.app.json",
-        "assets": ["apps/student/src/assets"],
-        "webpackConfig": "apps/student/webpack.config.js"
+        "main": "apps/class/src/main.ts",
+        "tsConfig": "apps/class/tsconfig.app.json",
+        "assets": ["apps/class/src/assets"],
+        "webpackConfig": "apps/class/webpack.config.js"
       },
       "configurations": {
         "development": {
@@ -40,8 +40,8 @@
       "cache": true,
       "executor": "@nx/js:prune-lockfile",
       "outputs": [
-        "{workspaceRoot}/dist/apps/student/package.json",
-        "{workspaceRoot}/dist/apps/student/pnpm-lock.yaml"
+        "{workspaceRoot}/dist/apps/class/package.json",
+        "{workspaceRoot}/dist/apps/class/package-lock.json"
       ],
       "options": {
         "buildTarget": "build"
@@ -50,7 +50,7 @@
     "copy-workspace-modules": {
       "dependsOn": ["build"],
       "cache": true,
-      "outputs": ["{workspaceRoot}/dist/apps/student/workspace_modules"],
+      "outputs": ["{workspaceRoot}/dist/apps/class/workspace_modules"],
       "executor": "@nx/js:copy-workspace-modules",
       "options": {
         "buildTarget": "build"
@@ -66,15 +66,15 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "student:build",
+        "buildTarget": "class:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "student:build:development"
+          "buildTarget": "class:build:development"
         },
         "production": {
-          "buildTarget": "student:build:production"
+          "buildTarget": "class:build:production"
         }
       }
     }
